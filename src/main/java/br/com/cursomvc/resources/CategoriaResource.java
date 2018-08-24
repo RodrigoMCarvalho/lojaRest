@@ -1,28 +1,50 @@
 package br.com.cursomvc.resources;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cursomvc.model.Categoria;
+import br.com.cursomvc.services.CategoriaService;
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaResource {
 	
+	@Autowired
+	private CategoriaService service;
+	
 	@GetMapping
-	public List<Categoria> listar() {
-		
-		Categoria cat1 = new Categoria(1, "Informática");
-		Categoria cat2 = new Categoria(1, "Escritório");
-		
-		List<Categoria> categorias = new ArrayList<>();
-		categorias.add(cat1);
-		categorias.add(cat2);
-		
-		return categorias;
+	public ResponseEntity<?> listar() {
+		List<Categoria> categorias = service.buscarTodos();
+		return ResponseEntity.ok(categorias);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> buscarPorId(@PathVariable("id") Integer id) {
+		Optional<Categoria> categoria = service.buscarPorId(id);
+		return ResponseEntity.ok(categoria);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
