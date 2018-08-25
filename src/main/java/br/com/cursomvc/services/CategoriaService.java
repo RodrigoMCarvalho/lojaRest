@@ -6,8 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.cursomvc.model.Categoria;
+import br.com.cursomvc.models.Categoria;
 import br.com.cursomvc.repositories.CategoriaRepository;
+import br.com.cursomvc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -20,8 +21,9 @@ public class CategoriaService {
 		return categorias;
 	}
 	
-	public Optional<Categoria> buscarPorId(Integer id) {
+	public Categoria buscarPorId(Integer id)  {
 		Optional<Categoria> categoria = repo.findById(id);
-		return categoria;
+		return categoria.orElseThrow(() -> new ObjectNotFoundException(
+						"Categoria não encontrada! ID " + id + ", do tipo: " + Categoria.class.getName()));
 	}
 }
