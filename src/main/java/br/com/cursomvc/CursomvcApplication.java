@@ -13,6 +13,7 @@ import br.com.cursomvc.models.Cidade;
 import br.com.cursomvc.models.Cliente;
 import br.com.cursomvc.models.Endereco;
 import br.com.cursomvc.models.Estado;
+import br.com.cursomvc.models.ItemPedido;
 import br.com.cursomvc.models.Pagamento;
 import br.com.cursomvc.models.PagamentoComBoleto;
 import br.com.cursomvc.models.PagamentoComCartao;
@@ -25,6 +26,7 @@ import br.com.cursomvc.repositories.CidadeRepository;
 import br.com.cursomvc.repositories.ClienteRepository;
 import br.com.cursomvc.repositories.EnderecoRepository;
 import br.com.cursomvc.repositories.EstadoRepository;
+import br.com.cursomvc.repositories.ItemPedidoRepository;
 import br.com.cursomvc.repositories.PagamentoRepository;
 import br.com.cursomvc.repositories.PedidoRepository;
 import br.com.cursomvc.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class CursomvcApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository ItemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomvcApplication.class, args);
@@ -112,6 +116,19 @@ public class CursomvcApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		ItemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 	
 	
