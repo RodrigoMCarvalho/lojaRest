@@ -2,8 +2,11 @@ package br.com.cursomvc.models;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 import br.com.cursomvc.models.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComBoleto extends Pagamento{
 
 	private static final long serialVersionUID = 1L;

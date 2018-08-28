@@ -1,7 +1,10 @@
 package br.com.cursomvc.models;
 
+import javax.persistence.Entity;
+
 import br.com.cursomvc.models.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComCartao extends Pagamento{
 	
 	private static final long serialVersionUID = 1L;
