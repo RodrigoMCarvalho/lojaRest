@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.cursomvc.models.enums.EstadoPagamento;
 
 @Entity
@@ -22,6 +24,7 @@ public abstract class Pagamento implements Serializable{  //para não instanciar
 	private Integer id;
 	private Integer estado;  //internamente será um inteiro
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="pedido_id")
 	@MapsId                            //pagamento relacionado com o id de Pedido

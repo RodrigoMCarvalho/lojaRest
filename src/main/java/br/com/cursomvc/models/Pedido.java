@@ -1,10 +1,8 @@
 package br.com.cursomvc.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Pedido implements Serializable{
 	
@@ -25,6 +25,8 @@ public class Pedido implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instance;
 	
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
@@ -39,7 +41,7 @@ public class Pedido implements Serializable{
 	private Endereco enderecoDeEntrega;
 	
 	@OneToMany(mappedBy="id.pedido")  //id de ItemPedido e pedido de ItemPedidoPK
-	private Set<ItemPedido> itens = new HashSet<>();  //evita de ter itens repetidos
+	private Set<ItemPedido> itens = new HashSet<>(); 
 	
 	public Pedido() {
 	}
@@ -52,14 +54,6 @@ public class Pedido implements Serializable{
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 	
-	public List<Pedido> getPedidos(){
-		List<Pedido> lista = new ArrayList<>();
-		for(ItemPedido item : itens) {
-			lista.add(item.getPedido());
-		}
-		return lista;
-	}
-
 	public Integer getId() {
 		return id;
 	}
