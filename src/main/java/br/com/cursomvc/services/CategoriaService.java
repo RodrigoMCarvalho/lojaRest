@@ -16,14 +16,25 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repo;
 	
-	public List<Categoria> buscarTodos(){
+	public List<Categoria> findAll(){
 		List<Categoria> categorias = repo.findAll();
 		return categorias;
 	}
 	
-	public Categoria buscarPorId(Integer id)  {
+	public Categoria findById(Integer id)  {
 		Optional<Categoria> categoria = repo.findById(id);
 		return categoria.orElseThrow(() -> new ObjectNotFoundException(
 						"Categoria não encontrada! ID " + id + ", do tipo: " + Categoria.class.getName()));
 	}
+	
+	public Categoria save(Categoria categoria) {
+		categoria.setId(null);
+		return repo.save(categoria);
+	}
+
+	public Categoria update(Categoria categoria) {
+		findById(categoria.getId()); //caso o ID seja inexistente será lançada uma exceção
+		return repo.save(categoria);
+	}
+
 }
