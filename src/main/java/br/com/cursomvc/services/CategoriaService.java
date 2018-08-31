@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.cursomvc.models.Categoria;
 import br.com.cursomvc.repositories.CategoriaRepository;
-import br.com.cursomvc.services.exceptions.ObjectNotFoundException;
 import br.com.cursomvc.services.exceptions.DataIntegrityException;
+import br.com.cursomvc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -18,9 +18,8 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repo;
 	
-	public List<Categoria> findAll(){
-		List<Categoria> categorias = repo.findAll();
-		return categorias;
+	public List<Categoria>findAll(){
+		return repo.findAll();
 	}
 	
 	public Categoria findById(Integer id)  {
