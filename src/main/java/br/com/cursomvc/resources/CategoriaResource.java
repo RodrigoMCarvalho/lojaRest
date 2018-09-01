@@ -64,10 +64,11 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> save(@RequestBody Categoria categoria){
+	public ResponseEntity<Void> save(@RequestBody CategoriaDTO categoriaDto){
+			Categoria categoria = service.fromDTO(categoriaDto);
 			categoria = service.save(categoria);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()   //obtém a URI do novo recurso que foi inserido
-					.path("/{id}").buildAndExpand(categoria.getId()).toUri();
+					.path("/{id}").buildAndExpand(categoriaDto.getId()).toUri();
 			return ResponseEntity.created(uri).build();
 	}
 	
