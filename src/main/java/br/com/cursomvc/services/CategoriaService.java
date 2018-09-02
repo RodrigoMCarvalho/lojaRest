@@ -3,6 +3,8 @@ package br.com.cursomvc.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -44,8 +46,13 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria categoria) {
-		findById(categoria.getId()); //caso o ID seja inexistente será lançada uma exceção
-		return repo.save(categoria);
+		Categoria novaCategoria = findById(categoria.getId()); //caso o ID seja inexistente será lançada uma exceção
+		updateData(novaCategoria, categoria);
+		return repo.save(novaCategoria);
+	}
+	
+	private void updateData(Categoria novaCategoria, Categoria categoria) { 
+		novaCategoria.setNome(categoria.getNome());
 	}
 	
 	public void delete(Integer id) {
@@ -58,7 +65,7 @@ public class CategoriaService {
 	}
 	
 	//converter categoriaDTO para categoria
-	public Categoria fromDTO(CategoriaDTO categoriaDto) {
+	public Categoria fromDTO(@Valid CategoriaDTO categoriaDto) {
 		return new Categoria(categoriaDto.getId(), categoriaDto.getNome());
 	}
 
