@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +66,7 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> save(@RequestBody CategoriaDTO categoriaDto){
+	public ResponseEntity<Void> save(@Valid @RequestBody CategoriaDTO categoriaDto){
 			Categoria categoria = service.fromDTO(categoriaDto);
 			categoria = service.save(categoria);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()   //obtém a URI do novo recurso que foi inserido
@@ -73,7 +75,8 @@ public class CategoriaResource {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable("id") Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO categoriaDto, @PathVariable("id") Integer id) {
+		Categoria categoria = service.fromDTO(categoriaDto);
 		categoria.setId(id);
 		categoria = service.update(categoria);
 		return ResponseEntity.noContent().build();

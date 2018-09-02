@@ -38,7 +38,7 @@ public class CategoriaService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Categoria save(Categoria categoria) {
+	public Categoria save(Categoria categoria){
 		categoria.setId(null);
 		return repo.save(categoria);
 	}
