@@ -24,6 +24,7 @@ public class ClienteDTO implements Serializable {
 	private String email;
 	
 	public ClienteDTO() {
+		
 	}
 
 	public ClienteDTO(Cliente cliente) {

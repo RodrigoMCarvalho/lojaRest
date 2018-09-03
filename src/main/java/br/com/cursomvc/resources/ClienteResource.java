@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.cursomvc.dto.ClienteDTO;
+import br.com.cursomvc.dto.ClienteNovoDTO;
 import br.com.cursomvc.models.Cliente;
 import br.com.cursomvc.services.ClienteService;
 
@@ -66,11 +67,11 @@ public class ClienteResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> save(@Valid @RequestBody ClienteDTO clienteDTO){
-			Cliente cliente = service.fromDTO(clienteDTO);
+	public ResponseEntity<Void> save(@Valid @RequestBody ClienteNovoDTO clienteNovoDTO){
+			Cliente cliente = service.fromDTO(clienteNovoDTO);
 			cliente = service.save(cliente);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()   //obtém a URI do novo recurso que foi inserido
-					.path("/{id}").buildAndExpand(clienteDTO.getId()).toUri();
+					.path("/{id}").buildAndExpand(cliente.getId()).toUri();
 			return ResponseEntity.created(uri).build();
 	}
 	
