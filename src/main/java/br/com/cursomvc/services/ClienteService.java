@@ -73,7 +73,7 @@ public class ClienteService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir um cliente que possui pedidos relacionados.");
+			throw new DataIntegrityException("Não é possível excluir um cliente que possui pedidos relacionados	.");
 		}	
 	}
 
@@ -83,7 +83,7 @@ public class ClienteService {
 	
 	public Cliente fromDTO(@Valid ClienteNovoDTO objtDTO) {
 		Cliente cli =  new Cliente(null , objtDTO.getNome(), 
-				objtDTO.getEmail(), objtDTO.getCpfOuCnpf(), 
+				objtDTO.getEmail(), objtDTO.getCpfOuCnpj(), 
 				TipoCliente.toEnum(objtDTO.getTipo()));
 		
 		Cidade cidade = new Cidade(objtDTO.getCidadeId(), null, null);
