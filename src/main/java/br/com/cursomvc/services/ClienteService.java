@@ -65,7 +65,7 @@ public class ClienteService {
 	
 	private void updateData(Cliente novoCliente, Cliente cliente) { //método para evitar null em cpf e tipo
 		novoCliente.setNome(cliente.getNome());
-		novoCliente.setEmail(cliente.getNome());
+		novoCliente.setEmail(cliente.getEmail());
 	}
 
 	public void delete(Integer id) {
