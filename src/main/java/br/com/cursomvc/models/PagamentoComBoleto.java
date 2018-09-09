@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import br.com.cursomvc.models.enums.EstadoPagamento;
 
 @Entity
+@JsonTypeName("pagamentoComBoleto") //palavra que identifica a classe no json
 public class PagamentoComBoleto extends Pagamento{
 
 	private static final long serialVersionUID = 1L;

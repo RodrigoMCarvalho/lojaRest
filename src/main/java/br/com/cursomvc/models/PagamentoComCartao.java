@@ -2,9 +2,12 @@ package br.com.cursomvc.models;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import br.com.cursomvc.models.enums.EstadoPagamento;
 
 @Entity
+@JsonTypeName("pagamentoComCartao") //palavra que identifica a classe no json
 public class PagamentoComCartao extends Pagamento{
 	
 	private static final long serialVersionUID = 1L;
