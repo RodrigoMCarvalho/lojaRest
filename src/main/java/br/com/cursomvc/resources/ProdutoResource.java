@@ -1,5 +1,7 @@
 package br.com.cursomvc.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cursomvc.dto.CategoriaDTO;
+import br.com.cursomvc.dto.ProdutoDTO;
 import br.com.cursomvc.models.Produto;
+import br.com.cursomvc.resources.utils.URL;
 import br.com.cursomvc.services.ProdutoService;
 
 @RestController
@@ -27,17 +30,20 @@ public class ProdutoResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<Page<Produto>> findPage(
-									@RequestParam(value ="nome", defaultValue="") Integer nome, 
-									@RequestParam(value ="categorias", defaultValue="") Integer categorias, 
+	public ResponseEntity<Page<ProdutoDTO>> findPage(
+									@RequestParam(value ="nome", defaultValue="") String nome, 
+									@RequestParam(value ="categorias", defaultValue="") String categorias, 
 									@RequestParam(value ="page", defaultValue="0") Integer page, 
 									@RequestParam(value ="linesPerPage", defaultValue="24") Integer linesPerPage,
 									@RequestParam(value ="orderBy", defaultValue="nome") String orderBy, 
 									@RequestParam(value ="direction", defaultValue="ASC") String direction) {
 		
-		Page<Produto> produtos = service.seach(page, linesPerPage, orderBy, direction);
-		Page<CategoriaDTO> categoriasDto = categorias.map(cat -> new CategoriaDTO(cat));
-		return ResponseEntity.ok().body(categoriasDto);
+		String nomeDecoded = URL.decodeParam(nome);	
+		List<Integer> ids = URL.decodeIntList(categorias);
+		
+		Page<Produto> list = service.seach(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
+		Page<ProdutoDTO> listDto = list.map(obj -> new ProdutoDTO(obj));  
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	

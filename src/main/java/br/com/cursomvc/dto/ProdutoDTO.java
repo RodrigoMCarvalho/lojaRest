@@ -2,6 +2,8 @@ package br.com.cursomvc.dto;
 
 import java.io.Serializable;
 
+import br.com.cursomvc.models.Produto;
+
 public class ProdutoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -11,8 +13,15 @@ public class ProdutoDTO implements Serializable {
 	private Double preco;
 
 	public ProdutoDTO() {
-
 	}
+	
+	
+	public ProdutoDTO(Produto produto) {
+		id = produto.getId();
+		nome = produto.getNome();
+		preco = produto.getPreco();
+	}
+
 
 	public Integer getId() {
 		return id;

@@ -39,7 +39,7 @@ public class ProdutoService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
 				orderBy);
 		List<Categoria> categorias = categoriaRepository.findAllById(ids); //busca os Ids passados na lista
-		return repo.seach(nome, categorias, pageRequest);
+		return repo.findDistinctByNomeIgnoreCaseContainingAndCategoriasIn(nome, categorias, pageRequest);
 	}
 	
 	
