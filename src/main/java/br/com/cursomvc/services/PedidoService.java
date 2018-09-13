@@ -35,6 +35,9 @@ public class PedidoService {
 	@Autowired
 	private ProdutoService produtoService;
 	
+	@Autowired
+	private ClienteService clienteService;
+	
 	public List<Pedido> findAll(){
 		List<Pedido> pedidos = repo.findAll();
 		return pedidos;
@@ -49,6 +52,7 @@ public class PedidoService {
 	@Transactional
 	public Pedido save(Pedido pedido) {
 		pedido.setId(null);
+		pedido.setCliente(clienteService.findById(pedido.getCliente().getId())); //busca o cliente para mostrar no toString
 		pedido.setInstance(new Date());
 		pedido.getPagamento().setEstado(EstadoPagamento.PENDENTE); //pedido que acabou de ser criado ainda está com pagamento pendente
 		pedido.getPagamento().setPedido(pedido);
@@ -62,10 +66,12 @@ public class PedidoService {
 		
 		for (ItemPedido itemPedido : pedido.getItens()) {
 			itemPedido.setDesconto(0.0);
-			itemPedido.setPreco(produtoService.findById(itemPedido.getProduto().getId()).getPreco());
+			itemPedido.setProduto(produtoService.findById(itemPedido.getProduto().getId())); //seta o produto em itemPedido
+			itemPedido.setPreco(itemPedido.getProduto().getPreco());  //busca o preço do produto
 			itemPedido.setPedido(pedido);
-			itemPedidoRepository.save(itemPedido);
 		}
+		itemPedidoRepository.saveAll(pedido.getItens());
+		System.out.println(pedido);
 		return pedido;
 	}
 }
