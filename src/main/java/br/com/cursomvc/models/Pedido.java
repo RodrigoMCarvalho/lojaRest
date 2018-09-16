@@ -144,9 +144,11 @@ public class Pedido implements Serializable{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		
 		StringBuilder builder = new StringBuilder();
+		builder.append("\nOlá " + getCliente().getNome() + ", seu pedido foi realizado com sucesso!!\n");
+		builder.append("\n");
 		builder.append("Pedido número: ");
 		builder.append(getId());
-		builder.append(", Instance: ");
+		builder.append(", Horário: ");
 		builder.append(sdf.format(getInstance()));
 		builder.append(", Cliente: ");
 		builder.append(getCliente().getNome());
@@ -157,7 +159,7 @@ public class Pedido implements Serializable{
 		for (ItemPedido itemPedido : getItens()) {
 			builder.append(itemPedido.toString());
 		}
-		
+		builder.append("\n");
 		builder.append("Valor total: ");
 		builder.append(nf.format(getValorTotal()));
 		builder.append("\n");

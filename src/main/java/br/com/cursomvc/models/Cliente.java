@@ -49,11 +49,11 @@ public class Cliente implements Serializable {
 	public Cliente() {
 	}
 	
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String email, String nome, String cpfOuCnpj, TipoCliente tipo) {
 		super();
 		this.id = id;
-		this.nome = nome;
 		this.email = email;
+		this.nome = nome;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo==null)? null : tipo.getCodigo(); //condicional para evitar NullPoint
 	}
@@ -146,5 +146,6 @@ public class Cliente implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	
 }
