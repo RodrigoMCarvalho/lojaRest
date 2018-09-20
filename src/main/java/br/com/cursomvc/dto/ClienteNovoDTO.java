@@ -27,6 +27,9 @@ public class ClienteNovoDTO implements Serializable {
 	private Integer tipo;
 	
 	@NotBlank(message="Preenchimento obrigatório")
+	private String senha;
+	
+	@NotBlank(message="Preenchimento obrigatório")
 	private String logradouro;
 	
 	@NotBlank(message="Preenchimento obrigatório")
@@ -118,7 +121,15 @@ public class ClienteNovoDTO implements Serializable {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
+	
+	public String getSenha() {
+		return senha;
+	}
 
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 	public String getTelefone1() {
 		return telefone1;
 	}
