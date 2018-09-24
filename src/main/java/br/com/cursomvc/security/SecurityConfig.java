@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private Environment env;
+	
+	@Autowired
+	private ImplementsUserDetailsService UserDetailsService;
 	
 	private static final String[] PUBLIC_MATCHERS = {
 			"/h2-console/**",
@@ -47,6 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.anyRequest().authenticated();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			//auth.inMemoryAuthentication()
+			//.withUser("rodrigo").password("{noop}123").roles("ADMIN");  // autenticação em memória
+			auth.userDetailsService(UserDetailsService)
+			.passwordEncoder(new BCryptPasswordEncoder());   //autenticação via JPA com criptografia
+	}
+	
 	 @Bean
 	  CorsConfigurationSource corsConfigurationSource() {
 	    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
