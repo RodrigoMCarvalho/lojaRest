@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private ImplementsUserDetailsService UserDetailsService;
 	
 	@Autowired
-	private JwtUtil jwtUtil;
+	private JWTUtil jwtUtil;
 	
 	private static final String[] PUBLIC_MATCHERS = {
 			"/h2-console/**",
