@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,6 +67,7 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> save(@Valid @RequestBody CategoriaDTO categoriaDto){
 			Categoria categoria = service.fromDTO(categoriaDto);
 			categoria = service.save(categoria);
@@ -75,6 +77,7 @@ public class CategoriaResource {
 	}
 	
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO categoriaDto, @PathVariable("id") Integer id) {
 		Categoria categoria = service.fromDTO(categoriaDto);
 		categoria.setId(id);
@@ -83,6 +86,7 @@ public class CategoriaResource {
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Categoria> delete(@PathVariable("id") Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();

@@ -24,7 +24,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
 		this.jwtUtil = jwtUtil;
 		this.userDetailsService = userDetailsService;
 	}
-	
+
 	@Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
