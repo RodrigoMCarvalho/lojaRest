@@ -19,9 +19,12 @@ import br.com.cursomvc.dto.ClienteNovoDTO;
 import br.com.cursomvc.models.Cidade;
 import br.com.cursomvc.models.Cliente;
 import br.com.cursomvc.models.Endereco;
+import br.com.cursomvc.models.enums.Perfil;
 import br.com.cursomvc.models.enums.TipoCliente;
 import br.com.cursomvc.repositories.ClienteRepository;
 import br.com.cursomvc.repositories.EnderecoRepository;
+import br.com.cursomvc.security.Usuario;
+import br.com.cursomvc.services.exceptions.AuthorizationException;
 import br.com.cursomvc.services.exceptions.DataIntegrityException;
 import br.com.cursomvc.services.exceptions.ObjectNotFoundException;
 
@@ -42,6 +45,12 @@ public class ClienteService {
 	}
 	
 	public Cliente findById(Integer id)  {
+		
+		Usuario usuario = UsuarioService.authenticated();
+		if(usuario == null || !usuario.hasRole(Perfil.ADMIN) && !id.equals(usuario.getId())) { //se o usuario for nulo ou não for ADMIN e o ID nao for igual do usuario logado
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> cliente = repo.findById(id);
 		return cliente.orElseThrow(() -> new ObjectNotFoundException(
 						"Cliente não encontrada! ID " + id + ", do tipo: " + Cliente.class.getName()));
