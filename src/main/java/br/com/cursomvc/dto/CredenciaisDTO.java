@@ -10,13 +10,6 @@ public class CredenciaisDTO implements Serializable {
 	private String senha;
 
 	public CredenciaisDTO() {
-		super();
-	}
-
-	public CredenciaisDTO(String email, String senha) {
-		super();
-		this.email = email;
-		this.senha = senha;
 	}
 
 	public String getEmail() {

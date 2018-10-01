@@ -74,4 +74,11 @@ public class Usuario implements UserDetails{
 	public boolean hasRole(Perfil perfil) {
 		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", email=" + email + ", senha=" + senha + ", authorities=" + authorities + "]";
+	}
+	
+	
 }

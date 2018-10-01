@@ -47,6 +47,7 @@ public class ClienteService {
 	public Cliente findById(Integer id)  {
 		
 		Usuario usuario = UsuarioService.authenticated();
+		System.out.println(usuario);
 		if(usuario == null || !usuario.hasRole(Perfil.ADMIN) && !id.equals(usuario.getId())) { //se o usuario for nulo ou não for ADMIN e o ID nao for igual do usuario logado
 			throw new AuthorizationException("Acesso negado");
 		}
