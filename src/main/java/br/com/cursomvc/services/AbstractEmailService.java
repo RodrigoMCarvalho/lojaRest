@@ -63,7 +63,6 @@ public abstract class AbstractEmailService implements EmailService{
 			sendOrderConfirmationEmail(pedido);
 			e.printStackTrace();
 		}
-		
 	}
 
 	private MimeMessage prepareMimeMessageFromPedido(Pedido pedido) throws MessagingException{
