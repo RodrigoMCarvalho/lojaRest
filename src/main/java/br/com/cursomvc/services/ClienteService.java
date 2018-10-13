@@ -1,5 +1,6 @@
 package br.com.cursomvc.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.cursomvc.dto.ClienteDTO;
 import br.com.cursomvc.dto.ClienteNovoDTO;
@@ -39,6 +41,9 @@ public class ClienteService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private S3Service s3Service;
 
 	public List<Cliente>findAll(){
 		return repo.findAll();
@@ -80,6 +85,10 @@ public class ClienteService {
 	private void updateData(Cliente novoCliente, Cliente cliente) { //método para evitar null em cpf e tipo
 		novoCliente.setNome(cliente.getNome());
 		novoCliente.setEmail(cliente.getEmail());
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 
 	public void delete(Integer id) {
