@@ -56,6 +56,8 @@ public class Cliente implements Serializable {
 	@JsonIgnore
 	private String senha;
 	
+	private String imageUrl;
+	
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE); //por padrão todo usuário novo será um cliente
 	}
@@ -143,6 +145,14 @@ public class Cliente implements Serializable {
 		this.pedidos = pedidos;
 	}
 	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	public Set<Perfil> getPerfis() {
 		return perfis.stream().map(perfil -> Perfil.toEnum(perfil)).collect(Collectors.toSet());
 	}

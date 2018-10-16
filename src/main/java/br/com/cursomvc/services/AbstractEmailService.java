@@ -49,7 +49,7 @@ public abstract class AbstractEmailService implements EmailService{
 	}
 	
 	protected String htmlFromTemplatePedido(Pedido pedido) {
-		Context context = new Context(); //Context do Thymeleaf
+		Context context = new Context(); //Context do Thymeleaf (equivalente ao Model do Spring)
 		context.setVariable("pedido", pedido);
 		return templateEngine.process("email/confirmacaoPedido", context);
 	}
