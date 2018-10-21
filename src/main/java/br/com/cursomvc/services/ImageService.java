@@ -10,6 +10,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
+import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,10 +52,21 @@ public class ImageService {
 		}
 	}
 	
+	//recorta a imagem de forma que ela fica quadrada
+	public BufferedImage cropSquare(BufferedImage sourceImg) {
+		int min = (sourceImg.getHeight() <= sourceImg.getWidth()) ? sourceImg.getHeight() : sourceImg.getWidth(); //descobre o mínimo
+		return Scalr.crop( //recortar a imagem
+			sourceImg, 
+			(sourceImg.getWidth()/2) - (min/2),  //metade da largura - metade do mínimo
+			(sourceImg.getHeight()/2) - (min/2),  //metade da altura - metade do mínimo
+			min, 
+			min);		
+	}
 	
-	
-	
-	
+	//redimencionar a imagem
+	public BufferedImage resize(BufferedImage sourceImg, int size) {
+		return Scalr.resize(sourceImg, Scalr.Method.ULTRA_QUALITY, size);
+	}
 	
 	
 	

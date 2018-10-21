@@ -52,6 +52,9 @@ public class ClienteService {
 	
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
+	
+	@Value("${img.profile.size}")
+	private int size;
 
 	public List<Cliente>findAll(){
 		return repo.findAll();
@@ -101,6 +104,9 @@ public class ClienteService {
 			throw new AuthorizationException("Acesso negado");
 		}
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		jpgImage = imageService.cropSquare(jpgImage); //recorta a imagem de forma que ela fica quadrada
+		jpgImage = imageService.resize(jpgImage, size); //redimenciona a imagem para o tamanho 200
+		
 		String fileName = prefix + usuario.getId() + ".jpg"; //Ex: cp1.jpg - prefix=cp, id=1
 		
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
