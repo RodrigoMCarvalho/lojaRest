@@ -60,6 +60,19 @@ public class ClienteService {
 		return repo.findAll();
 	}
 	
+	public Cliente findByEmail(String email) {
+		Usuario usuario = UsuarioService.authenticated();
+		if(usuario == null || !usuario.hasRole(Perfil.ADMIN) && !email.equals(usuario.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		Cliente cliente = repo.findByEmail(email);
+		if(cliente == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! ID: " + usuario.getId() 
+				+ ", Tipo: " + Cliente.class.getName());
+		}
+		return cliente;
+	}
+	
 	public Cliente findById(Integer id)  {
 		
 		Usuario usuario = UsuarioService.authenticated();

@@ -70,6 +70,12 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(categoria);
 	}
 	
+	@GetMapping("/email")
+	public ResponseEntity<Cliente> findByEmail(@RequestParam("value") String email){
+		Cliente cliente = service.findByEmail(email);
+		return ResponseEntity.ok().body(cliente);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Void> save(@Valid @RequestBody ClienteNovoDTO clienteNovoDTO){
 			Cliente cliente = service.fromDTO(clienteNovoDTO);
