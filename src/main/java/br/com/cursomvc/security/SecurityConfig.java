@@ -67,16 +67,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-			//auth.inMemoryAuthentication()
-			//.withUser("rodrigo").password("{noop}123").roles("ADMIN");  // autenticação em memória
-			auth.userDetailsService(userDetailsService)
-			.passwordEncoder(new BCryptPasswordEncoder());   //autenticação via JPA com criptografia
+		//auth.inMemoryAuthentication()
+		//.withUser("rodrigo").password("{noop}123").roles("ADMIN");  // autenticação em memória
+		auth.userDetailsService(userDetailsService)
+		.passwordEncoder(new BCryptPasswordEncoder());   //autenticação via JPA com criptografia
 	}
 	
 	 @Bean
 	  CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "GET", "DELETE", "OPTIONS")); 
 	    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+	    source.registerCorsConfiguration("/**", configuration);
 	    return source;
 	  }
 	
